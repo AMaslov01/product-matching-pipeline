@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "matchcup"
+version = "0.1.0"
+description = "Field-aligned product matching pipeline for Ozon E-CUP 2026"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "numpy>=2.0,<3",
+  "pandas>=2.2,<4",
+  "pyarrow>=18,<27",
+  "PyYAML>=6.0,<7",
+  "rapidfuzz>=3.10,<4",
+  "scikit-learn>=1.5,<2",
+]
+
+[project.optional-dependencies]
+local = [
+  "catboost>=1.2.8,<2",
+  "duckdb>=1.2,<2",
+]
+train = [
+  "accelerate>=1.2,<2",
+  "safetensors>=0.5,<1",
+  "torch>=2.5,<3",
+  "transformers>=4.48,<6",
+]
+dev = [
+  "pytest>=8,<10",
+  "pytest-cov>=6,<8",
+  "ruff>=0.9,<1",
+]
+
+[project.scripts]
+matchcup = "matchcup.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/matchcup"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

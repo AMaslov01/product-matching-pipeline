@@ -1,0 +1,53 @@
+paths:
+  raw_dir: data/raw
+  work_dir: artifacts
+
+preprocess:
+  batch_size: 4096
+  workers: 6
+  remaining_attributes_chars: 1800
+  parquet_compression: zstd
+
+features:
+  char_ngram_size: 3
+  measurement_tolerance: 0.015
+
+folds:
+  count: 5
+  seed: 20260812
+
+silver:
+  max_rows: 2000000
+  seed: 20260812
+  target_bins: 10
+
+cross_encoder:
+  model_name: jhu-clsp/mmBERT-base
+  model_revision: c5955035435e2bf121cde7f3c8863ef52ff35d82
+  max_length: 384
+  train_batch_size: 16
+  eval_batch_size: 64
+  gradient_accumulation_steps: 4
+  silver_epochs: 1
+  gold_epochs: 2
+  silver_learning_rate: 0.00002
+  gold_learning_rate: 0.000008
+  weight_decay: 0.01
+  warmup_ratio: 0.06
+  ranking_weight: 0.15
+  mixed_precision: fp16
+  num_workers: 4
+  seed: 20260812
+
+fusion:
+  iterations: 1200
+  learning_rate: 0.04
+  depth_candidates: [6, 8]
+  l2_leaf_reg_candidates: [5.0, 10.0]
+  random_seed: 20260812
+
+inference:
+  item_batch_size: 4096
+  pair_chunk_size: 8192
+  model_batch_size: 256
+  workers: 16

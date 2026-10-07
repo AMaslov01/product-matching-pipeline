@@ -1,0 +1,5 @@
+# The runtime image only installs the pinned inference dependencies; it does
+# not copy repository files. Keep Docker QA context small and deterministic.
+*
+!Dockerfile
+!.dockerignore

@@ -1,0 +1,6 @@
+schema_robustness:
+  version: 1
+  variant: silver_control
+  transform: attribute_permutation
+  pair_probability: 0.5
+  seed: 20260815
